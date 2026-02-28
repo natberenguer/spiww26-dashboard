@@ -104,7 +104,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .chart-card+.chart-card{margin-top:0;}
   .days-scroll-wrap{overflow:visible;margin:0;padding:0;}
-  .days-scroll{display:grid;grid-template-columns:repeat(0,1fr);gap:14px;width:auto;}
+  .days-scroll{display:grid;grid-template-columns:repeat(1,1fr);gap:14px;width:auto;}
   .day-card{width:auto;}
   .tbl-cards{display:none;}
   .tbl-desktop{display:block !important;}
@@ -137,15 +137,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       </div>
       <div class="badge-live">
         <span class="pulse"></span>
-        <span>Atualizado 28/02/2026 · 16h42</span>
+        <span>Atualizado 28/02/2026 · 17h17</span>
       </div>
     </div>
   </div>
   <div class="sec">Totais gerais</div>
   <div class="kpi-grid">
     <div class="kpi k-total wide">
-      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">0</div></div>
-      <div><div class="kpi-sub">0 dias de vendas</div></div>
+      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">532</div></div>
+      <div><div class="kpi-sub">1 dias de vendas</div></div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-receita">
@@ -155,13 +155,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     </div>
     <div class="kpi k-taxa">
       <div class="kpi-label">Tx. Confirmação</div>
-      <div class="kpi-value">0%</div>
-      <div class="kpi-sub">0 de 0</div>
+      <div class="kpi-value">100%</div>
+      <div class="kpi-sub">532 de 532</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-conf">
       <div class="kpi-label">Confirmados</div>
-      <div class="kpi-value">0</div>
+      <div class="kpi-value">532</div>
       <div class="kpi-sub">pag. aprovado</div>
       <div class="kpi-bar"></div>
     </div>
@@ -196,11 +196,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 const CUPONS = ["Orgânico", "Marktech Meta", "Marktech Google", "EBEstadao", "EmmRIW"];
 const COLORS = ["#00d9ff", "#9b5cf6", "#4d9fff", "#ff8c42", "#ff4dab"];
 const CMAP = Object.fromEntries(CUPONS.map((c,i) => [c, COLORS[i]]));
-const DIAS = [];
-const BY_DAY = {};
-const ORIG = {};
-const TOTAL_N = 0;
-const CONF_N = 0;
+const DIAS = ["??"];
+const BY_DAY = {"??": {"total": 532, "confirmados": 532, "pendentes": 0, "orig": {"Orgânico": {"t": 0, "c": 532, "p": 0}}}};
+const ORIG = {"Orgânico": {"t": 532, "c": 532, "p": 0, "r": "R$ 0"}};
+const TOTAL_N = 532;
+const CONF_N = 532;
 const PEND_N = 0;
 
 Chart.defaults.color = '#7882a0';
