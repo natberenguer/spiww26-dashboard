@@ -104,7 +104,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .chart-card+.chart-card{margin-top:0;}
   .days-scroll-wrap{overflow:visible;margin:0;padding:0;}
-  .days-scroll{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:auto;}
+  .days-scroll{display:grid;grid-template-columns:repeat(0,1fr);gap:14px;width:auto;}
   .day-card{width:auto;}
   .tbl-cards{display:none;}
   .tbl-desktop{display:block !important;}
@@ -137,39 +137,37 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       </div>
       <div class="badge-live">
         <span class="pulse"></span>
-        <span>Atualizado 27/02/2026</span>
-        <span class="badge-time">· 23:35h</span>
+        <span>Atualizado 28/02/2026 · 16h42</span>
       </div>
     </div>
   </div>
   <div class="sec">Totais gerais</div>
   <div class="kpi-grid">
     <div class="kpi k-total wide">
-      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">536</div></div>
-      <div><div class="kpi-sub">5 dias de vendas</div></div>
+      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">0</div></div>
+      <div><div class="kpi-sub">0 dias de vendas</div></div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-receita">
       <div class="kpi-label">Receita Confirmada</div>
-      <div class="kpi-value">R$ 285.120</div>
-      <div class="kpi-sub">emitido R$ 315.414<br>pendente R$ 30.294</div>
+      <div class="kpi-value">R$ 0</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-taxa">
       <div class="kpi-label">Tx. Confirmação</div>
-      <div class="kpi-value">91%</div>
-      <div class="kpi-sub">485 de 536</div>
+      <div class="kpi-value">0%</div>
+      <div class="kpi-sub">0 de 0</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-conf">
       <div class="kpi-label">Confirmados</div>
-      <div class="kpi-value">485</div>
+      <div class="kpi-value">0</div>
       <div class="kpi-sub">pag. aprovado</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-pend">
       <div class="kpi-label">Pendentes</div>
-      <div class="kpi-value">51</div>
+      <div class="kpi-value">0</div>
       <div class="kpi-sub">aguardando pag.</div>
       <div class="kpi-bar"></div>
     </div>
@@ -177,11 +175,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   <div class="sec">Gráficos</div>
   <div class="chart-row">
     <div class="chart-card">
-      <div class="chart-head"><div class="chart-title">Inscritos por Origem</div><div class="chart-sub">Confirmados e pendentes · total acumulado</div></div>
+      <div class="chart-head"><div class="chart-title">Inscritos por Origem</div><div class="chart-sub">Confirmados e pendentes</div></div>
       <canvas id="cOrigens" height="200"></canvas>
     </div>
     <div class="chart-card">
-      <div class="chart-head"><div class="chart-title">Evolução Diária por Origem</div><div class="chart-sub">Linha do tempo</div><div class="legend" id="lineLegend"></div></div>
+      <div class="chart-head"><div class="chart-title">Evolução Diária</div><div class="chart-sub">Linha do tempo</div><div class="legend" id="lineLegend"></div></div>
       <canvas id="cEvolucao" height="160"></canvas>
     </div>
   </div>
@@ -190,45 +188,79 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   <div class="sec">Total por origem</div>
   <div class="tbl-cards" id="tblCards"></div>
   <div class="tbl-desktop" id="tblDesktop">
-    <div class="tbl-head"><div>Origem</div><div>Total</div><div>Confirmados</div><div>Pendentes</div><div>Tx. Conf.</div><div>Receita</div></div>
+    <div class="tbl-head"><div>Origem</div><div>Total</div><div>Confirmados</div><div>Pendentes</div><div>Tx.</div><div>Receita</div></div>
     <div id="tblBody"></div>
   </div>
 </div>
 <script>
-const CUPONS=["Orgânico","Marktech Meta","Marktech Google","EBEstadao","EmmRIW"];
-const COLORS=["#00d9ff","#9b5cf6","#4d9fff","#ff8c42","#ff4dab"];
-const CMAP=Object.fromEntries(CUPONS.map((c,i)=>[c,COLORS[i]]));
-const DIAS=["23/02","24/02","25/02","26/02","27/02"];
-const BY_DAY={
-  "23/02":{total:173,confirmados:168,pendentes:5,orig:{"Orgânico":{t:129,c:125,p:4},"EBEstadao":{t:44,c:43,p:1}}},
-  "24/02":{total:66,confirmados:60,pendentes:6,orig:{"Orgânico":{t:29,c:25,p:4},"Marktech Meta":{t:24,c:23,p:1},"Marktech Google":{t:1,c:1,p:0},"EBEstadao":{t:12,c:11,p:1}}},
-  "25/02":{total:62,confirmados:55,pendentes:7,orig:{"Orgânico":{t:9,c:9,p:0},"Marktech Meta":{t:45,c:39,p:6},"Marktech Google":{t:3,c:3,p:0},"EBEstadao":{t:3,c:2,p:1},"EmmRIW":{t:2,c:2,p:0}}},
-  "26/02":{total:93,confirmados:85,pendentes:8,orig:{"Orgânico":{t:38,c:31,p:7},"Marktech Meta":{t:15,c:15,p:0},"Marktech Google":{t:8,c:8,p:0},"EBEstadao":{t:15,c:15,p:0},"EmmRIW":{t:17,c:16,p:1}}},
-  "27/02":{total:142,confirmados:117,pendentes:25,orig:{"Orgânico":{t:84,c:77,p:7},"Marktech Meta":{t:9,c:7,p:2},"Marktech Google":{t:7,c:5,p:2},"EBEstadao":{t:21,c:12,p:9},"EmmRIW":{t:21,c:16,p:5}}},
-};
-const TOTAL={total:536,confirmados:485,pendentes:51,orig:{
-  "Orgânico":       {t:289,c:267,p:22,r:"R$ 155.628"},
-  "Marktech Meta":  {t:93, c:84, p:9, r:"R$ 49.896"},
-  "Marktech Google":{t:19, c:17, p:2, r:"R$ 10.098"},
-  "EBEstadao":      {t:95, c:83, p:12,r:"R$ 49.302"},
-  "EmmRIW":         {t:40, c:34, p:6, r:"R$ 20.196"},
-}};
-Chart.defaults.color='#7882a0';Chart.defaults.font.family='Bricolage Grotesque';
-const gc='rgba(255,255,255,0.05)';
-new Chart(document.getElementById('cOrigens'),{type:'bar',data:{labels:CUPONS.map(c=>c.replace('Marktech ','M. ')),datasets:[{label:'Confirmados',data:CUPONS.map(c=>TOTAL.orig[c]?.c||0),backgroundColor:COLORS.map(c=>c+'cc'),borderRadius:6,borderSkipped:false},{label:'Pendentes',data:CUPONS.map(c=>TOTAL.orig[c]?.p||0),backgroundColor:COLORS.map(c=>c+'44'),borderRadius:6,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{boxWidth:10,padding:12,font:{size:11}}}},scales:{x:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}},y:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}}}}});
-new Chart(document.getElementById('cEvolucao'),{type:'line',data:{labels:DIAS,datasets:CUPONS.map((c,i)=>({label:c,data:DIAS.map(d=>BY_DAY[d].orig[c]?.t||0),borderColor:COLORS[i],backgroundColor:COLORS[i]+'15',pointBackgroundColor:COLORS[i],pointRadius:4,pointHoverRadius:6,borderWidth:2.5,tension:.35,fill:false}))},options:{responsive:true,maintainAspectRatio:true,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{font:{size:10}}},y:{grid:{color:gc},beginAtZero:true,ticks:{font:{size:10}}}}}});
-document.getElementById('lineLegend').innerHTML=CUPONS.map((c,i)=>`<div class="leg-item"><span class="leg-dot" style="background:${COLORS[i]}"></span>${c}</div>`).join('');
-DIAS.forEach(dia=>{
-  const d=BY_DAY[dia],maxT=Math.max(...Object.values(d.orig).map(o=>o.t));
-  const rows=CUPONS.map(c=>{const o=d.orig[c];if(!o)return'';return`<div class="ori-item"><div class="ori-name-row"><span class="ori-name" style="color:${CMAP[c]}">${c}</span><span class="ori-count" style="color:${CMAP[c]}">${o.t}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(o.t/maxT*100)}%;background:${CMAP[c]}"></div></div></div>`;}).join('');
-  document.getElementById('dayCards').innerHTML+=`<div class="day-card"><div class="day-top"><div class="day-date-row"><div class="day-date">${dia}</div><div class="day-num">${d.total}</div></div><div class="day-pills"><div class="pill pill-g"><span class="pill-dot"></span>${d.confirmados} conf.</div><div class="pill pill-a"><span class="pill-dot"></span>${d.pendentes} pend.</div></div></div><div class="day-body">${rows}</div></div>`;
+const CUPONS = ["Orgânico", "Marktech Meta", "Marktech Google", "EBEstadao", "EmmRIW"];
+const COLORS = ["#00d9ff", "#9b5cf6", "#4d9fff", "#ff8c42", "#ff4dab"];
+const CMAP = Object.fromEntries(CUPONS.map((c,i) => [c, COLORS[i]]));
+const DIAS = [];
+const BY_DAY = {};
+const ORIG = {};
+const TOTAL_N = 0;
+const CONF_N = 0;
+const PEND_N = 0;
+
+Chart.defaults.color = '#7882a0';
+Chart.defaults.font.family = 'Bricolage Grotesque';
+const gc = 'rgba(255,255,255,0.05)';
+
+new Chart(document.getElementById('cOrigens'), {
+  type: 'bar',
+  data: {
+    labels: CUPONS.map(c => c.replace('Marktech ', 'M. ')),
+    datasets: [
+      {label:'Confirmados', data: CUPONS.map(c => ORIG[c]?.c||0), backgroundColor: COLORS.map(c => c+'cc'), borderRadius:6, borderSkipped:false},
+      {label:'Pendentes',   data: CUPONS.map(c => ORIG[c]?.p||0), backgroundColor: COLORS.map(c => c+'44'), borderRadius:6, borderSkipped:false}
+    ]
+  },
+  options: {responsive:true, maintainAspectRatio:true, plugins:{legend:{labels:{boxWidth:10,padding:12,font:{size:11}}}}, scales:{x:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}},y:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}}}}
 });
-const tc=document.getElementById('tblCards');
-CUPONS.forEach((c,i)=>{const o=TOTAL.orig[c];if(!o)return;tc.innerHTML+=`<div class="tbl-card"><div class="tbl-card-top"><div class="tbl-name"><span class="tbl-swatch" style="background:${COLORS[i]}"></span>${c}</div><div class="tbl-total">${o.t}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g">${o.c}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a">${o.p}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:11px">${o.r}</div></div></div><div class="tc-pill">${Math.round(o.c/o.t*100)}% confirmados</div></div>`;});
-tc.innerHTML+=`<div class="tbl-card grand"><div class="tbl-card-top"><div class="tbl-name" style="font-size:16px;font-weight:800;color:#fff">Total Geral</div><div class="tbl-grand-total">536</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g" style="font-size:20px">485</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a" style="font-size:20px">51</div></div><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:12px">R$ 285.120</div></div></div><div class="tc-pill" style="font-size:11px;padding:4px 12px">91% taxa de confirmação</div></div>`;
-const tb=document.getElementById('tblBody');
-CUPONS.forEach((c,i)=>{const o=TOTAL.orig[c];if(!o)return;tb.innerHTML+=`<div class="tbl-row"><div><span class="ori-badge"><span class="ori-swatch" style="background:${COLORS[i]}"></span>${c}</span></div><div><span class="dnum">${o.t}</span></div><div><span class="dnum dnum-g">${o.c}</span></div><div><span class="dnum dnum-a">${o.p}</span></div><div><span class="dtc">${Math.round(o.c/o.t*100)}%</span></div><div><span class="dnum dnum-e">${o.r}</span></div></div>`;});
-tb.innerHTML+=`<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">536</span></div><div><span class="dnum dnum-g" style="font-size:19px">485</span></div><div><span class="dnum dnum-a" style="font-size:19px">51</span></div><div><span class="dtc" style="font-size:12px;padding:4px 12px">91%</span></div><div><span class="dnum" style="font-size:14px;font-weight:800;color:#10b981">R$ 285.120</span></div></div>`;
+
+new Chart(document.getElementById('cEvolucao'), {
+  type: 'line',
+  data: {
+    labels: DIAS,
+    datasets: CUPONS.map((c,i) => ({
+      label: c,
+      data: DIAS.map(d => BY_DAY[d]?.orig[c]?.t || 0),
+      borderColor: COLORS[i], backgroundColor: COLORS[i]+'15',
+      pointBackgroundColor: COLORS[i], pointRadius:4, pointHoverRadius:6,
+      borderWidth:2.5, tension:.35, fill:false
+    }))
+  },
+  options: {responsive:true, maintainAspectRatio:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{x:{grid:{color:gc},ticks:{font:{size:10}}},y:{grid:{color:gc},beginAtZero:true,ticks:{font:{size:10}}}}}
+});
+
+document.getElementById('lineLegend').innerHTML = CUPONS.map((c,i) =>
+  `<div class="leg-item"><span class="leg-dot" style="background:${COLORS[i]}"></span>${c}</div>`
+).join('');
+
+DIAS.forEach(dia => {
+  const d = BY_DAY[dia]; if (!d) return;
+  const maxT = Math.max(...Object.values(d.orig || {}).map(o => o.t || 0), 1);
+  const rows = CUPONS.map(c => {
+    const o = d.orig?.[c]; if (!o) return '';
+    return `<div class="ori-item"><div class="ori-name-row"><span class="ori-name" style="color:${CMAP[c]}">${c}</span><span class="ori-count" style="color:${CMAP[c]}">${o.t}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(o.t/maxT*100)}%;background:${CMAP[c]}"></div></div></div>`;
+  }).join('');
+  document.getElementById('dayCards').innerHTML += `<div class="day-card"><div class="day-top"><div class="day-date-row"><div class="day-date">${dia}</div><div class="day-num">${d.total}</div></div><div class="day-pills"><div class="pill pill-g"><span class="pill-dot"></span>${d.confirmados} conf.</div><div class="pill pill-a"><span class="pill-dot"></span>${d.pendentes} pend.</div></div></div><div class="day-body">${rows}</div></div>`;
+});
+
+const tc = document.getElementById('tblCards');
+CUPONS.forEach((c,i) => {
+  const o = ORIG[c]; if (!o) return;
+  tc.innerHTML += `<div class="tbl-card"><div class="tbl-card-top"><div class="tbl-name"><span class="tbl-swatch" style="background:${COLORS[i]}"></span>${c}</div><div class="tbl-total">${o.t}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g">${o.c}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a">${o.p}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:11px">${o.r}</div></div></div><div class="tc-pill">${Math.round(o.c/o.t*100)}% confirmados</div></div>`;
+});
+tc.innerHTML += `<div class="tbl-card grand"><div class="tbl-card-top"><div class="tbl-name" style="font-size:16px;font-weight:800;color:#fff">Total Geral</div><div class="tbl-grand-total">${TOTAL_N}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g" style="font-size:20px">${CONF_N}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a" style="font-size:20px">${PEND_N}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Tx.</div><div class="tbl-stat-val e" style="font-size:18px">${Math.round(CONF_N/TOTAL_N*100)}%</div></div></div></div>`;
+
+const tb = document.getElementById('tblBody');
+CUPONS.forEach((c,i) => {
+  const o = ORIG[c]; if (!o) return;
+  tb.innerHTML += `<div class="tbl-row"><div><span class="ori-badge"><span class="ori-swatch" style="background:${COLORS[i]}"></span>${c}</span></div><div><span class="dnum">${o.t}</span></div><div><span class="dnum dnum-g">${o.c}</span></div><div><span class="dnum dnum-a">${o.p}</span></div><div><span class="dtc">${Math.round(o.c/o.t*100)}%</span></div><div><span class="dnum dnum-e">${o.r}</span></div></div>`;
+});
+tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${TOTAL_N}</span></div><div><span class="dnum dnum-g" style="font-size:19px">${CONF_N}</span></div><div><span class="dnum dnum-a" style="font-size:19px">${PEND_N}</span></div><div><span class="dtc" style="font-size:12px;padding:4px 12px">${Math.round(CONF_N/TOTAL_N*100)}%</span></div><div></div></div>`;
 </script>
 </body>
 </html>
