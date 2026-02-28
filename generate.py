@@ -129,7 +129,10 @@ def generate_html(by_day, by_origin, total):
 if __name__ == "__main__":
     print("Buscando participantes...")
     participants = get_all_participants()
-    print(f"Total: {len(participants)}")
+  print(f"Total: {len(participants)}")
+if participants:
+    import json
+    print(json.dumps(participants[0], indent=2, ensure_ascii=False))
     by_day, by_origin, total = process(participants)
     html = generate_html(by_day, by_origin, total)
     with open("index.html", "w", encoding="utf-8") as f:
