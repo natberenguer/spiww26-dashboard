@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SPIW · Inscrições</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#08090f;--s1:#0f1120;--s2:#161929;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--cyan:#00d9ff;--purple:#9b5cf6;--green:#1df78a;--amber:#ffb520;--emerald:#10b981;--text:#eef0fa;--muted:#7882a0;--dim:#2e3650;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Bricolage Grotesque',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 40% at 20% 0%,rgba(0,217,255,.055) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(155,92,246,.06) 0%,transparent 60%);}
+.page{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:24px 16px 64px;}
+.header{margin-bottom:24px;animation:rise .5s ease both;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);opacity:.8;margin-bottom:8px;}
+.header h1{font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#fff;}
+.header h1 em{font-style:normal;background:linear-gradient(110deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header-info{margin-top:10px;display:flex;flex-direction:column;gap:4px;}
+.header-info span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.badge-live{display:inline-flex;align-items:center;gap:6px;background:rgba(29,247,138,.08);border:1px solid rgba(29,247,138,.2);color:var(--green);font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:12px;}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite;flex-shrink:0;}
+.badge-time{font-size:10px;opacity:.7;font-family:'JetBrains Mono',monospace;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(29,247,138,.5)}50%{box-shadow:0 0 0 5px rgba(29,247,138,0)}}
+.sec{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:rise .5s .08s ease both;}
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:18px 16px 16px;position:relative;overflow:hidden;transition:transform .15s;}
+.kpi:active{transform:scale(.97);}
+.kpi-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.kpi-value{font-size:36px;font-weight:800;line-height:1;letter-spacing:-.03em;}
+.kpi.k-total .kpi-value{color:var(--cyan);}
+.kpi.k-receita .kpi-value{color:var(--emerald);font-size:22px;letter-spacing:-.01em;}
+.kpi.k-conf .kpi-value{color:var(--green);}
+.kpi.k-pend .kpi-value{color:var(--amber);}
+.kpi.k-taxa .kpi-value{color:#fff;}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4;}
+.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 16px 16px;}
+.kpi.k-total .kpi-bar{background:linear-gradient(90deg,var(--cyan),var(--purple));}
+.kpi.k-receita .kpi-bar{background:linear-gradient(90deg,var(--emerald),#34d399);}
+.kpi.k-conf .kpi-bar{background:var(--green);}
+.kpi.k-pend .kpi-bar{background:var(--amber);}
+.kpi.k-taxa .kpi-bar{background:linear-gradient(90deg,var(--purple),var(--cyan));}
+.kpi.wide{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;}
+.kpi.wide .kpi-value{font-size:42px;}
+.chart-card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:20px 16px;animation:rise .5s .15s ease both;}
+.chart-card+.chart-card{margin-top:12px;}
+.chart-head{margin-bottom:16px;}
+.chart-title{font-size:14px;font-weight:700;color:#fff;}
+.chart-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.days-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px 8px;scrollbar-width:none;}
+.days-scroll-wrap::-webkit-scrollbar{display:none;}
+.days-scroll{display:flex;gap:10px;width:max-content;}
+.day-card{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;width:200px;flex-shrink:0;}
+.day-top{padding:14px 16px 12px;background:var(--s2);border-bottom:1px solid var(--border);}
+.day-date-row{display:flex;justify-content:space-between;align-items:center;}
+.day-date{font-size:16px;font-weight:800;color:#fff;}
+.day-num{font-size:30px;font-weight:800;color:var(--cyan);line-height:1;}
+.day-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;display:flex;align-items:center;gap:4px;}
+.pill-g{background:rgba(29,247,138,.1);color:var(--green);border:1px solid rgba(29,247,138,.2);}
+.pill-a{background:rgba(255,181,32,.1);color:var(--amber);border:1px solid rgba(255,181,32,.2);}
+.pill-dot{width:4px;height:4px;border-radius:50%;background:currentColor;}
+.day-body{padding:12px 16px;}
+.ori-item{margin-bottom:8px;}
+.ori-item:last-child{margin-bottom:0;}
+.ori-name-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.ori-name{font-size:10px;font-weight:600;}
+.ori-count{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
+.bar-track{height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.tbl-cards{display:flex;flex-direction:column;gap:10px;animation:rise .5s .35s ease both;}
+.tbl-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
+.tbl-card.grand{background:var(--s2);border-color:var(--border2);padding:16px;}
+.tbl-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.tbl-name{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;}
+.tbl-swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.tbl-total{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--cyan);}
+.tbl-grand-total{font-size:38px;font-weight:800;color:var(--cyan);letter-spacing:-.03em;}
+.tbl-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.tbl-stat{background:rgba(255,255,255,.03);border-radius:10px;padding:8px 10px;text-align:center;}
+.tbl-stat-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.tbl-stat-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;}
+.tbl-stat-val.g{color:var(--green);}
+.tbl-stat-val.a{color:var(--amber);}
+.tbl-stat-val.e{color:var(--emerald);}
+.tc-pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;background:rgba(29,247,138,.1);color:var(--green);border:1px solid rgba(29,247,138,.18);margin-top:8px;}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:768px){
+  .page{max-width:1280px;padding:48px 32px 80px;}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;}
+  .header h1{font-size:46px;}
+  .badge-live{margin-top:0;}
+  .kpi-grid{grid-template-columns:repeat(5,1fr);gap:14px;}
+  .kpi{padding:24px 20px 22px;}
+  .kpi.wide{grid-column:auto;display:block;}
+  .kpi.wide .kpi-value{font-size:54px;}
+  .kpi.k-receita .kpi-value{font-size:28px;}
+  .kpi-value{font-size:54px;}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .chart-card+.chart-card{margin-top:0;}
+  .days-scroll-wrap{overflow:visible;margin:0;padding:0;}
+  .days-scroll{display:grid;grid-template-columns:repeat(__NDIAS__,1fr);gap:14px;width:auto;}
+  .day-card{width:auto;}
+  .tbl-cards{display:none;}
+  .tbl-desktop{display:block !important;}
+}
+.tbl-desktop{display:none;background:var(--s1);border:1px solid var(--border);border-radius:18px;overflow:hidden;animation:rise .5s .35s ease both;}
+.tbl-head{display:grid;grid-template-columns:2fr repeat(5,1fr);padding:13px 24px;background:var(--s2);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.tbl-row{display:grid;grid-template-columns:2fr repeat(5,1fr);padding:15px 24px;border-bottom:1px solid var(--border);align-items:center;transition:background .15s;}
+.tbl-row:last-child{border:none;}
+.tbl-row:hover{background:rgba(255,255,255,.025);}
+.tbl-row.grand-row{background:var(--s2);border-top:1px solid var(--border2);padding:18px 24px;}
+.ori-badge{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;}
+.ori-swatch{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+.dnum{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;}
+.dnum-big{font-size:24px;font-weight:800;color:var(--cyan);}
+.dnum-g{color:var(--green);}
+.dnum-a{color:var(--amber);}
+.dnum-e{color:var(--emerald);font-size:13px;}
+.dtc{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;background:rgba(29,247,138,.1);color:var(--green);border:1px solid rgba(29,247,138,.18);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="eyebrow">Dashboard · Inscrições</div>
+      <h1>São Paulo <em>Innovation Week</em></h1>
+      <div class="header-info">
+        <span>📅 13 a 15 de maio de 2026</span>
+        <span>📍 Mercado Livre Arena Pacaembu &amp; FAAP</span>
+      </div>
+      <div class="badge-live">
+        <span class="pulse"></span>
+        <span>Atualizado __TIMESTAMP__</span>
+      </div>
+    </div>
+  </div>
+  <div class="sec">Totais gerais</div>
+  <div class="kpi-grid">
+    <div class="kpi k-total wide">
+      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">__TOTAL__</div></div>
+      <div><div class="kpi-sub">__NDIAS__ dias de vendas</div></div>
+      <div class="kpi-bar"></div>
+    </div>
+    <div class="kpi k-receita">
+      <div class="kpi-label">Receita Confirmada</div>
+      <div class="kpi-value">__RECEITA__</div>
+      <div class="kpi-bar"></div>
+    </div>
+    <div class="kpi k-taxa">
+      <div class="kpi-label">Tx. Confirmação</div>
+      <div class="kpi-value">__TAXA__%</div>
+      <div class="kpi-sub">__CONF__ de __TOTAL__</div>
+      <div class="kpi-bar"></div>
+    </div>
+    <div class="kpi k-conf">
+      <div class="kpi-label">Confirmados</div>
+      <div class="kpi-value">__CONF__</div>
+      <div class="kpi-sub">pag. aprovado</div>
+      <div class="kpi-bar"></div>
+    </div>
+    <div class="kpi k-pend">
+      <div class="kpi-label">Pendentes</div>
+      <div class="kpi-value">__PEND__</div>
+      <div class="kpi-sub">aguardando pag.</div>
+      <div class="kpi-bar"></div>
+    </div>
+  </div>
+  <div class="sec">Gráficos</div>
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-head"><div class="chart-title">Inscritos por Origem</div><div class="chart-sub">Confirmados e pendentes</div></div>
+      <canvas id="cOrigens" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-head"><div class="chart-title">Evolução Diária</div><div class="chart-sub">Linha do tempo</div><div class="legend" id="lineLegend"></div></div>
+      <canvas id="cEvolucao" height="160"></canvas>
+    </div>
+  </div>
+  <div class="sec">Por dia</div>
+  <div class="days-scroll-wrap"><div class="days-scroll" id="dayCards"></div></div>
+  <div class="sec">Total por origem</div>
+  <div class="tbl-cards" id="tblCards"></div>
+  <div class="tbl-desktop" id="tblDesktop">
+    <div class="tbl-head"><div>Origem</div><div>Total</div><div>Confirmados</div><div>Pendentes</div><div>Tx.</div><div>Receita</div></div>
+    <div id="tblBody"></div>
+  </div>
+</div>
+<script>
+const CUPONS = __CUPONS_JSON__;
+const COLORS = __COLORS_JSON__;
+const CMAP = Object.fromEntries(CUPONS.map((c,i) => [c, COLORS[i]]));
+const DIAS = __DIAS_JSON__;
+const BY_DAY = __BY_DAY_JSON__;
+const ORIG = __ORIG_JSON__;
+const TOTAL_N = __TOTAL__;
+const CONF_N = __CONF__;
+const PEND_N = __PEND__;
+
+Chart.defaults.color = '#7882a0';
+Chart.defaults.font.family = 'Bricolage Grotesque';
+const gc = 'rgba(255,255,255,0.05)';
+
+new Chart(document.getElementById('cOrigens'), {
+  type: 'bar',
+  data: {
+    labels: CUPONS.map(c => c.replace('Marktech ', 'M. ')),
+    datasets: [
+      {label:'Confirmados', data: CUPONS.map(c => ORIG[c]?.c||0), backgroundColor: COLORS.map(c => c+'cc'), borderRadius:6, borderSkipped:false},
+      {label:'Pendentes',   data: CUPONS.map(c => ORIG[c]?.p||0), backgroundColor: COLORS.map(c => c+'44'), borderRadius:6, borderSkipped:false}
+    ]
+  },
+  options: {responsive:true, maintainAspectRatio:true, plugins:{legend:{labels:{boxWidth:10,padding:12,font:{size:11}}}}, scales:{x:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}},y:{stacked:true,grid:{color:gc},ticks:{font:{size:10}}}}}
+});
+
+new Chart(document.getElementById('cEvolucao'), {
+  type: 'line',
+  data: {
+    labels: DIAS,
+    datasets: CUPONS.map((c,i) => ({
+      label: c,
+      data: DIAS.map(d => BY_DAY[d]?.orig[c]?.t || 0),
+      borderColor: COLORS[i], backgroundColor: COLORS[i]+'15',
+      pointBackgroundColor: COLORS[i], pointRadius:4, pointHoverRadius:6,
+      borderWidth:2.5, tension:.35, fill:false
+    }))
+  },
+  options: {responsive:true, maintainAspectRatio:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{x:{grid:{color:gc},ticks:{font:{size:10}}},y:{grid:{color:gc},beginAtZero:true,ticks:{font:{size:10}}}}}
+});
+
+document.getElementById('lineLegend').innerHTML = CUPONS.map((c,i) =>
+  `<div class="leg-item"><span class="leg-dot" style="background:${COLORS[i]}"></span>${c}</div>`
+).join('');
+
+DIAS.forEach(dia => {
+  const d = BY_DAY[dia]; if (!d) return;
+  const maxT = Math.max(...Object.values(d.orig || {}).map(o => o.t || 0), 1);
+  const rows = CUPONS.map(c => {
+    const o = d.orig?.[c]; if (!o) return '';
+    return `<div class="ori-item"><div class="ori-name-row"><span class="ori-name" style="color:${CMAP[c]}">${c}</span><span class="ori-count" style="color:${CMAP[c]}">${o.t}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(o.t/maxT*100)}%;background:${CMAP[c]}"></div></div></div>`;
+  }).join('');
+  document.getElementById('dayCards').innerHTML += `<div class="day-card"><div class="day-top"><div class="day-date-row"><div class="day-date">${dia}</div><div class="day-num">${d.total}</div></div><div class="day-pills"><div class="pill pill-g"><span class="pill-dot"></span>${d.confirmados} conf.</div><div class="pill pill-a"><span class="pill-dot"></span>${d.pendentes} pend.</div></div></div><div class="day-body">${rows}</div></div>`;
+});
+
+const tc = document.getElementById('tblCards');
+CUPONS.forEach((c,i) => {
+  const o = ORIG[c]; if (!o) return;
+  tc.innerHTML += `<div class="tbl-card"><div class="tbl-card-top"><div class="tbl-name"><span class="tbl-swatch" style="background:${COLORS[i]}"></span>${c}</div><div class="tbl-total">${o.t}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g">${o.c}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a">${o.p}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:11px">${o.r}</div></div></div><div class="tc-pill">${Math.round(o.c/o.t*100)}% confirmados</div></div>`;
+});
+tc.innerHTML += `<div class="tbl-card grand"><div class="tbl-card-top"><div class="tbl-name" style="font-size:16px;font-weight:800;color:#fff">Total Geral</div><div class="tbl-grand-total">${TOTAL_N}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Conf.</div><div class="tbl-stat-val g" style="font-size:20px">${CONF_N}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Pend.</div><div class="tbl-stat-val a" style="font-size:20px">${PEND_N}</div></div><div class="tbl-stat"><div class="tbl-stat-label">Tx.</div><div class="tbl-stat-val e" style="font-size:18px">${Math.round(CONF_N/TOTAL_N*100)}%</div></div></div></div>`;
+
+const tb = document.getElementById('tblBody');
+CUPONS.forEach((c,i) => {
+  const o = ORIG[c]; if (!o) return;
+  tb.innerHTML += `<div class="tbl-row"><div><span class="ori-badge"><span class="ori-swatch" style="background:${COLORS[i]}"></span>${c}</span></div><div><span class="dnum">${o.t}</span></div><div><span class="dnum dnum-g">${o.c}</span></div><div><span class="dnum dnum-a">${o.p}</span></div><div><span class="dtc">${Math.round(o.c/o.t*100)}%</span></div><div><span class="dnum dnum-e">${o.r}</span></div></div>`;
+});
+tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${TOTAL_N}</span></div><div><span class="dnum dnum-g" style="font-size:19px">${CONF_N}</span></div><div><span class="dnum dnum-a" style="font-size:19px">${PEND_N}</span></div><div><span class="dtc" style="font-size:12px;padding:4px 12px">${Math.round(CONF_N/TOTAL_N*100)}%</span></div><div></div></div>`;
+</script>
+</body>
+</html>
