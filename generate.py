@@ -35,7 +35,7 @@ def get_all_participants():
 
 
 def classify_cupom(p):
-    disc = p.get("discount_code_name", "") or ""
+    disc = p.get("order_discount", "") or ""
     for code, name in CUPONS_MAP.items():
         if code in disc:
             return name
@@ -48,17 +48,18 @@ def process(participants):
     total = {"t": 0, "c": 0, "p": 0}
 
     for p in participants:
-        created = p.get("created_date", "") or p.get("updated_date", "") or ""
+        created = p.get("order_date", "") or ""
         try:
-            dt = datetime.fromisoformat(created.replace("Z", "+00:00")).astimezone(BRT)
+            dt = datetime.strptime(created[:19], "%Y-%m-%d %H:%M:%S")
+            dt = dt.replace(tzinfo=BRT)
             dia = dt.strftime("%d/%m")
         except:
             dia = "??"
 
         cupom = classify_cupom(p)
         status = p.get("order_status", "")
-        confirmado = status in ("A", "approved", "Aprovado")
-        valor = float(p.get("amount", 0) or 0)
+        confirmado = status == "A"
+        valor = float(p.get("ticket_sale_price", 0) or 0)
 
         if dia not in by_day:
             by_day[dia] = {"total": 0, "confirmados": 0, "pendentes": 0, "orig": {}}
@@ -129,10 +130,8 @@ if __name__ == "__main__":
     print("Buscando participantes...")
     participants = get_all_participants()
     print(f"Total: {len(participants)}")
-    if participants:
-        print("=== EXEMPLO PARTICIPANTE ===")
-        print(json.dumps(participants[0], indent=2, ensure_ascii=False))
     by_day, by_origin, total = process(participants)
+    print(f"Confirmados: {total['c']} | Pendentes: {total['p']}")
     html = generate_html(by_day, by_origin, total)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
