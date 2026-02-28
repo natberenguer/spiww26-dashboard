@@ -103,7 +103,6 @@ def generate_html(by_day, by_origin, total):
         if o["t"] > 0:
             orig_data[c] = {"t": o["t"], "c": o["c"], "p": o["p"], "r": fmt_brl(o["r"])}
 
-    # Inject data as JSON into template
     dias_json = json.dumps(dias, ensure_ascii=False)
     by_day_json = json.dumps(by_day, ensure_ascii=False)
     orig_json = json.dumps(orig_data, ensure_ascii=False)
@@ -129,10 +128,10 @@ def generate_html(by_day, by_origin, total):
 if __name__ == "__main__":
     print("Buscando participantes...")
     participants = get_all_participants()
-  print(f"Total: {len(participants)}")
-if participants:
-    import json
-    print(json.dumps(participants[0], indent=2, ensure_ascii=False))
+    print(f"Total: {len(participants)}")
+    if participants:
+        print("=== EXEMPLO PARTICIPANTE ===")
+        print(json.dumps(participants[0], indent=2, ensure_ascii=False))
     by_day, by_origin, total = process(participants)
     html = generate_html(by_day, by_origin, total)
     with open("index.html", "w", encoding="utf-8") as f:
