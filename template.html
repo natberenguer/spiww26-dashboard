@@ -260,7 +260,7 @@ CUPONS.forEach((c,i) => {
   const o = ORIG[c]; if (!o) return;
   tb.innerHTML += `<div class="tbl-row"><div><span class="ori-badge"><span class="ori-swatch" style="background:${COLORS[i]}"></span>${c}</span></div><div><span class="dnum">${o.t}</span></div><div><span class="dnum dnum-g">${o.c}</span></div><div><span class="dnum dnum-a">${o.p}</span></div><div><span class="dtc">${Math.round(o.c/o.t*100)}%</span></div><div><span class="dnum dnum-e">${o.r}</span></div></div>`;
 });
-tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${TOTAL_N}</span></div><div><span class="dnum dnum-g" style="font-size:19px">${CONF_N}</span></div><div><span class="dnum dnum-a" style="font-size:19px">${PEND_N}</span></div><div><span class="dtc" style="font-size:12px;padding:4px 12px">${Math.round(CONF_N/TOTAL_N*100)}%</span></div><div></div></div>`;
+tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${TOTAL_N}</span></div><div><span class="dnum dnum-g" style="font-size:19px">${CONF_N}</span></div><div><span class="dnum dnum-a" style="font-size:19px">${PEND_N}</span></div><div><span class="dtc" style="font-size:12px;padding:4px 12px">${Math.round(CONF_N/TOTAL_N*100)}%</span></div><div><span class="dnum dnum-e">__RECEITA__</span></div></div>`;
 </script>
 </body>
 </html>
