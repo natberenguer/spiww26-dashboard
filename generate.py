@@ -94,7 +94,7 @@ def fmt_brl(v):
 def generate_html(by_day, by_origin, total):
     now = datetime.now(BRT)
     ts = now.strftime("%d/%m/%Y · %Hh%M")
-    dias = sorted(by_day.keys())
+    dias = sorted(by_day.keys(), key=lambda d: datetime.strptime(d, "%d/%m"))
     ndias = len(dias)
     rec_conf = sum(by_origin[c]["r"] for c in CUPONS)
     taxa = round(total["c"] / total["t"] * 100) if total["t"] else 0
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     by_day, by_origin, total = process(participants)
     print(f"Confirmados: {total['c']} | Pendentes: {total['p']}")
     print("=== BY_DAY SAMPLE ===")
-    dias = sorted(by_day.keys())
+    dias = sorted(by_day.keys(), key=lambda d: datetime.strptime(d, "%d/%m"))
     if dias:
         d = dias[0]
         print(f"{d}: {json.dumps(by_day[d], ensure_ascii=False)}")
