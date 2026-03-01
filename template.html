@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>SPIW · Inscrições</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -48,6 +51,10 @@ function updateDots() {
   }
 }
 
+function forceRefresh(btn) {
+  btn.classList.add('spinning');
+  setTimeout(() => { window.location.href = window.location.href.split('?')[0] + '?t=' + Date.now(); }, 300);
+}
 </script>
 <style>
 :root{--bg:#08090f;--s1:#0f1120;--s2:#161929;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--cyan:#00d9ff;--purple:#9b5cf6;--green:#1df78a;--amber:#ffb520;--emerald:#10b981;--text:#eef0fa;--muted:#7882a0;--dim:#2e3650;}
@@ -63,6 +70,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .header-info span{font-size:12px;color:var(--muted);}
 .badge-live{display:inline-flex;align-items:center;gap:6px;background:rgba(29,247,138,.08);border:1px solid rgba(29,247,138,.2);color:var(--green);font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:12px;}
 .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite;flex-shrink:0;}
+.refresh-btn{background:none;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:11px;font-weight:600;padding:5px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s;margin-top:10px;}
+.refresh-btn:active{transform:scale(.95);color:var(--cyan);border-color:var(--cyan);}
+.refresh-btn svg{transition:transform .5s;}
+.refresh-btn.spinning svg{animation:spin .6s linear;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(29,247,138,.5)}50%{box-shadow:0 0 0 5px rgba(29,247,138,0)}}
 .sec{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
 .sec::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -223,6 +235,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <span class="pulse"></span>
         <span>Atualizado __TIMESTAMP__</span>
       </div>
+      <button class="refresh-btn" onclick="forceRefresh(this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+        Atualizar
+      </button>
     </div>
   </div>
   <div class="sec">Totais gerais</div>
