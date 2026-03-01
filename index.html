@@ -137,31 +137,31 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       </div>
       <div class="badge-live">
         <span class="pulse"></span>
-        <span>Atualizado 01/03/2026 · 09h39</span>
+        <span>Atualizado 01/03/2026 · 09h47</span>
       </div>
     </div>
   </div>
   <div class="sec">Totais gerais</div>
   <div class="kpi-grid">
     <div class="kpi k-total wide">
-      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">570</div></div>
+      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">572</div></div>
       <div><div class="kpi-sub">7 dias de vendas</div></div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-receita">
       <div class="kpi-label">Receita Confirmada</div>
-      <div class="kpi-value">R$ 335.610</div>
+      <div class="kpi-value">R$ 336.798</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-taxa">
       <div class="kpi-label">Tx. Confirmação</div>
       <div class="kpi-value">100%</div>
-      <div class="kpi-sub">570 de 570</div>
+      <div class="kpi-sub">572 de 572</div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-conf">
       <div class="kpi-label">Confirmados</div>
-      <div class="kpi-value">570</div>
+      <div class="kpi-value">572</div>
       <div class="kpi-sub">pag. aprovado</div>
       <div class="kpi-bar"></div>
     </div>
@@ -196,11 +196,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 const CUPONS = ["Orgânico", "Marktech Meta", "Marktech Google", "EBEstadao", "EmmRIW"];
 const COLORS = ["#00d9ff", "#9b5cf6", "#4d9fff", "#ff8c42", "#ff4dab"];
 const CMAP = Object.fromEntries(CUPONS.map((c,i) => [c, COLORS[i]]));
-const DIAS = ["01/03", "23/02", "24/02", "25/02", "26/02", "27/02", "28/02"];
-const BY_DAY = {"24/02": {"total": 61, "confirmados": 61, "pendentes": 0, "orig": {"EBEstadao": {"t": 11, "c": 11, "p": 0}, "Orgânico": {"t": 25, "c": 25, "p": 0}, "Marktech Meta": {"t": 24, "c": 24, "p": 0}, "Marktech Google": {"t": 1, "c": 1, "p": 0}}}, "26/02": {"total": 85, "confirmados": 85, "pendentes": 0, "orig": {"Orgânico": {"t": 31, "c": 31, "p": 0}, "EBEstadao": {"t": 15, "c": 15, "p": 0}, "EmmRIW": {"t": 16, "c": 16, "p": 0}, "Marktech Meta": {"t": 15, "c": 15, "p": 0}, "Marktech Google": {"t": 8, "c": 8, "p": 0}}}, "28/02": {"total": 47, "confirmados": 47, "pendentes": 0, "orig": {"Marktech Meta": {"t": 8, "c": 8, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "Orgânico": {"t": 27, "c": 27, "p": 0}, "EBEstadao": {"t": 4, "c": 4, "p": 0}, "EmmRIW": {"t": 3, "c": 3, "p": 0}}}, "27/02": {"total": 119, "confirmados": 119, "pendentes": 0, "orig": {"EmmRIW": {"t": 16, "c": 16, "p": 0}, "Orgânico": {"t": 79, "c": 79, "p": 0}, "EBEstadao": {"t": 12, "c": 12, "p": 0}, "Marktech Meta": {"t": 7, "c": 7, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}}}, "01/03": {"total": 28, "confirmados": 28, "pendentes": 0, "orig": {"EBEstadao": {"t": 12, "c": 12, "p": 0}, "Orgânico": {"t": 16, "c": 16, "p": 0}}}, "23/02": {"total": 168, "confirmados": 168, "pendentes": 0, "orig": {"EBEstadao": {"t": 43, "c": 43, "p": 0}, "Orgânico": {"t": 125, "c": 125, "p": 0}}}, "25/02": {"total": 62, "confirmados": 62, "pendentes": 0, "orig": {"Marktech Meta": {"t": 45, "c": 45, "p": 0}, "Orgânico": {"t": 9, "c": 9, "p": 0}, "EBEstadao": {"t": 3, "c": 3, "p": 0}, "EmmRIW": {"t": 2, "c": 2, "p": 0}, "Marktech Google": {"t": 3, "c": 3, "p": 0}}}};
-const ORIG = {"Orgânico": {"t": 312, "c": 312, "p": 0, "r": "R$ 182.358"}, "Marktech Meta": {"t": 99, "c": 99, "p": 0, "r": "R$ 58.806"}, "Marktech Google": {"t": 22, "c": 22, "p": 0, "r": "R$ 13.068"}, "EBEstadao": {"t": 100, "c": 100, "p": 0, "r": "R$ 59.400"}, "EmmRIW": {"t": 37, "c": 37, "p": 0, "r": "R$ 21.978"}};
-const TOTAL_N = 570;
-const CONF_N = 570;
+const DIAS = ["23/02", "24/02", "25/02", "26/02", "27/02", "28/02", "01/03"];
+const BY_DAY = {"24/02": {"total": 61, "confirmados": 61, "pendentes": 0, "orig": {"EBEstadao": {"t": 11, "c": 11, "p": 0}, "Orgânico": {"t": 25, "c": 25, "p": 0}, "Marktech Meta": {"t": 24, "c": 24, "p": 0}, "Marktech Google": {"t": 1, "c": 1, "p": 0}}}, "26/02": {"total": 85, "confirmados": 85, "pendentes": 0, "orig": {"Orgânico": {"t": 31, "c": 31, "p": 0}, "EBEstadao": {"t": 15, "c": 15, "p": 0}, "EmmRIW": {"t": 16, "c": 16, "p": 0}, "Marktech Meta": {"t": 15, "c": 15, "p": 0}, "Marktech Google": {"t": 8, "c": 8, "p": 0}}}, "28/02": {"total": 47, "confirmados": 47, "pendentes": 0, "orig": {"Marktech Meta": {"t": 8, "c": 8, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "Orgânico": {"t": 27, "c": 27, "p": 0}, "EBEstadao": {"t": 4, "c": 4, "p": 0}, "EmmRIW": {"t": 3, "c": 3, "p": 0}}}, "27/02": {"total": 119, "confirmados": 119, "pendentes": 0, "orig": {"EmmRIW": {"t": 16, "c": 16, "p": 0}, "Orgânico": {"t": 79, "c": 79, "p": 0}, "EBEstadao": {"t": 12, "c": 12, "p": 0}, "Marktech Meta": {"t": 7, "c": 7, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}}}, "01/03": {"total": 30, "confirmados": 30, "pendentes": 0, "orig": {"EBEstadao": {"t": 12, "c": 12, "p": 0}, "Orgânico": {"t": 18, "c": 18, "p": 0}}}, "23/02": {"total": 168, "confirmados": 168, "pendentes": 0, "orig": {"EBEstadao": {"t": 43, "c": 43, "p": 0}, "Orgânico": {"t": 125, "c": 125, "p": 0}}}, "25/02": {"total": 62, "confirmados": 62, "pendentes": 0, "orig": {"Marktech Meta": {"t": 45, "c": 45, "p": 0}, "Orgânico": {"t": 9, "c": 9, "p": 0}, "EBEstadao": {"t": 3, "c": 3, "p": 0}, "EmmRIW": {"t": 2, "c": 2, "p": 0}, "Marktech Google": {"t": 3, "c": 3, "p": 0}}}};
+const ORIG = {"Orgânico": {"t": 314, "c": 314, "p": 0, "r": "R$ 183.546"}, "Marktech Meta": {"t": 99, "c": 99, "p": 0, "r": "R$ 58.806"}, "Marktech Google": {"t": 22, "c": 22, "p": 0, "r": "R$ 13.068"}, "EBEstadao": {"t": 100, "c": 100, "p": 0, "r": "R$ 59.400"}, "EmmRIW": {"t": 37, "c": 37, "p": 0, "r": "R$ 21.978"}};
+const TOTAL_N = 572;
+const CONF_N = 572;
 const PEND_N = 0;
 
 Chart.defaults.color = '#7882a0';
