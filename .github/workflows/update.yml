@@ -2,8 +2,8 @@ name: Atualizar Dashboard SPIW
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # a cada 30 minutos
-  workflow_dispatch:         # permite rodar manualmente também
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update:
