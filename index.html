@@ -192,7 +192,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       </div>
       <div class="badge-live">
         <span class="pulse"></span>
-        <span>Atualizado 02/03/2026 · 12h44</span>
+        <span>Atualizado 02/03/2026 · 14h32</span>
       </div>
       <button class="refresh-btn" id="refreshBtn" onclick="forceRefresh()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
@@ -203,21 +203,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   <div class="sec">Totais gerais</div>
   <div class="kpi-grid">
     <div class="kpi k-total wide">
-      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">763</div></div>
+      <div><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">767</div></div>
       <div><div class="kpi-sub">8 dias de vendas</div></div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-receita">
       <div class="receita-inner">
         <div class="receita-symbol">Receita Total · R$</div>
-        <div class="receita-value">453.618</div>
+        <div class="receita-value">456.390</div>
         <div class="receita-sub">pagamentos aprovados</div>
       </div>
       <div class="kpi-bar"></div>
     </div>
     <div class="kpi k-conf">
       <div class="kpi-label">Confirmados</div>
-      <div class="kpi-value">763</div>
+      <div class="kpi-value">767</div>
       <div class="kpi-sub">pag. aprovado</div>
       <div class="kpi-bar"></div>
     </div>
@@ -256,10 +256,10 @@ const CUPONS = ["Orgânico", "Marktech Meta", "Marktech Google", "EBEstadao", "E
 const COLORS = ["#00d9ff", "#9b5cf6", "#4d9fff", "#ff8c42", "#ff4dab"];
 const CMAP = Object.fromEntries(CUPONS.map((c,i) => [c, COLORS[i]]));
 const DIAS = ["23/02", "24/02", "25/02", "26/02", "27/02", "28/02", "01/03", "02/03"];
-const BY_DAY = {"24/02": {"total": 61, "confirmados": 61, "pendentes": 0, "orig": {"EBEstadao": {"t": 11, "c": 11, "p": 0}, "Orgânico": {"t": 25, "c": 25, "p": 0}, "Marktech Meta": {"t": 24, "c": 24, "p": 0}, "Marktech Google": {"t": 1, "c": 1, "p": 0}}}, "26/02": {"total": 85, "confirmados": 85, "pendentes": 0, "orig": {"Orgânico": {"t": 31, "c": 31, "p": 0}, "EBEstadao": {"t": 15, "c": 15, "p": 0}, "EmmRIW": {"t": 16, "c": 16, "p": 0}, "Marktech Meta": {"t": 15, "c": 15, "p": 0}, "Marktech Google": {"t": 8, "c": 8, "p": 0}}}, "28/02": {"total": 47, "confirmados": 47, "pendentes": 0, "orig": {"Marktech Meta": {"t": 8, "c": 8, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "Orgânico": {"t": 27, "c": 27, "p": 0}, "EBEstadao": {"t": 4, "c": 4, "p": 0}, "EmmRIW": {"t": 3, "c": 3, "p": 0}}}, "27/02": {"total": 119, "confirmados": 119, "pendentes": 0, "orig": {"EmmRIW": {"t": 16, "c": 16, "p": 0}, "Orgânico": {"t": 79, "c": 79, "p": 0}, "EBEstadao": {"t": 12, "c": 12, "p": 0}, "Marktech Meta": {"t": 7, "c": 7, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}}}, "01/03": {"total": 217, "confirmados": 217, "pendentes": 0, "orig": {"EBEstadao": {"t": 86, "c": 86, "p": 0}, "Orgânico": {"t": 101, "c": 101, "p": 0}, "Marktech Meta": {"t": 20, "c": 20, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "EmmRIW": {"t": 5, "c": 5, "p": 0}}}, "23/02": {"total": 168, "confirmados": 168, "pendentes": 0, "orig": {"EBEstadao": {"t": 43, "c": 43, "p": 0}, "Orgânico": {"t": 125, "c": 125, "p": 0}}}, "25/02": {"total": 62, "confirmados": 62, "pendentes": 0, "orig": {"Marktech Meta": {"t": 45, "c": 45, "p": 0}, "Orgânico": {"t": 9, "c": 9, "p": 0}, "EBEstadao": {"t": 3, "c": 3, "p": 0}, "EmmRIW": {"t": 2, "c": 2, "p": 0}, "Marktech Google": {"t": 3, "c": 3, "p": 0}}}, "02/03": {"total": 4, "confirmados": 4, "pendentes": 0, "orig": {"EBEstadao": {"t": 1, "c": 1, "p": 0}, "Marktech Meta": {"t": 2, "c": 2, "p": 0}, "EmmRIW": {"t": 1, "c": 1, "p": 0}}}};
-const ORIG = {"Orgânico": {"t": 397, "c": 397, "p": 0, "r": "R$ 235.818"}, "Marktech Meta": {"t": 121, "c": 121, "p": 0, "r": "R$ 72.072"}, "Marktech Google": {"t": 27, "c": 27, "p": 0, "r": "R$ 16.038"}, "EBEstadao": {"t": 175, "c": 175, "p": 0, "r": "R$ 104.049"}, "EmmRIW": {"t": 43, "c": 43, "p": 0, "r": "R$ 25.641"}};
-const TOTAL_N = 763;
-const CONF_N = 763;
+const BY_DAY = {"24/02": {"total": 61, "confirmados": 61, "pendentes": 0, "orig": {"EBEstadao": {"t": 11, "c": 11, "p": 0}, "Orgânico": {"t": 25, "c": 25, "p": 0}, "Marktech Meta": {"t": 24, "c": 24, "p": 0}, "Marktech Google": {"t": 1, "c": 1, "p": 0}}}, "26/02": {"total": 85, "confirmados": 85, "pendentes": 0, "orig": {"Orgânico": {"t": 31, "c": 31, "p": 0}, "EBEstadao": {"t": 15, "c": 15, "p": 0}, "EmmRIW": {"t": 16, "c": 16, "p": 0}, "Marktech Meta": {"t": 15, "c": 15, "p": 0}, "Marktech Google": {"t": 8, "c": 8, "p": 0}}}, "28/02": {"total": 47, "confirmados": 47, "pendentes": 0, "orig": {"Marktech Meta": {"t": 8, "c": 8, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "Orgânico": {"t": 27, "c": 27, "p": 0}, "EBEstadao": {"t": 4, "c": 4, "p": 0}, "EmmRIW": {"t": 3, "c": 3, "p": 0}}}, "27/02": {"total": 119, "confirmados": 119, "pendentes": 0, "orig": {"EmmRIW": {"t": 16, "c": 16, "p": 0}, "Orgânico": {"t": 79, "c": 79, "p": 0}, "EBEstadao": {"t": 12, "c": 12, "p": 0}, "Marktech Meta": {"t": 7, "c": 7, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}}}, "01/03": {"total": 217, "confirmados": 217, "pendentes": 0, "orig": {"EBEstadao": {"t": 86, "c": 86, "p": 0}, "Orgânico": {"t": 101, "c": 101, "p": 0}, "Marktech Meta": {"t": 20, "c": 20, "p": 0}, "Marktech Google": {"t": 5, "c": 5, "p": 0}, "EmmRIW": {"t": 5, "c": 5, "p": 0}}}, "23/02": {"total": 168, "confirmados": 168, "pendentes": 0, "orig": {"EBEstadao": {"t": 43, "c": 43, "p": 0}, "Orgânico": {"t": 125, "c": 125, "p": 0}}}, "25/02": {"total": 62, "confirmados": 62, "pendentes": 0, "orig": {"Marktech Meta": {"t": 45, "c": 45, "p": 0}, "Orgânico": {"t": 9, "c": 9, "p": 0}, "EBEstadao": {"t": 3, "c": 3, "p": 0}, "EmmRIW": {"t": 2, "c": 2, "p": 0}, "Marktech Google": {"t": 3, "c": 3, "p": 0}}}, "02/03": {"total": 8, "confirmados": 8, "pendentes": 0, "orig": {"EBEstadao": {"t": 1, "c": 1, "p": 0}, "EmmRIW": {"t": 5, "c": 5, "p": 0}, "Marktech Meta": {"t": 2, "c": 2, "p": 0}}}};
+const ORIG = {"Orgânico": {"t": 397, "c": 397, "p": 0, "r": "R$ 235.818"}, "Marktech Meta": {"t": 121, "c": 121, "p": 0, "r": "R$ 72.072"}, "Marktech Google": {"t": 27, "c": 27, "p": 0, "r": "R$ 16.038"}, "EBEstadao": {"t": 175, "c": 175, "p": 0, "r": "R$ 104.049"}, "EmmRIW": {"t": 47, "c": 47, "p": 0, "r": "R$ 28.413"}};
+const TOTAL_N = 767;
+const CONF_N = 767;
 
 Chart.defaults.color = '#7882a0';
 Chart.defaults.font.family = 'Bricolage Grotesque';
@@ -312,14 +312,14 @@ CUPONS.forEach((c,i) => {
   const o = ORIG[c]; if (!o) return;
   tc.innerHTML += `<div class="tbl-card"><div class="tbl-card-top"><div class="tbl-name"><span class="tbl-swatch" style="background:${COLORS[i]}"></span>${c}</div><div class="tbl-total">${o.c}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e">${o.r}</div></div><div class="tbl-stat"><div class="tbl-stat-label">% do total</div><div class="tbl-stat-val g">${Math.round(o.c/CONF_N*100)}%</div></div></div></div>`;
 });
-tc.innerHTML += `<div class="tbl-card grand"><div class="tbl-card-top"><div class="tbl-name" style="font-size:16px;font-weight:800;color:#fff">Total Geral</div><div class="tbl-grand-total">${CONF_N}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:13px">R$ 453.618</div></div><div class="tbl-stat"><div class="tbl-stat-label">Dias</div><div class="tbl-stat-val g">${DIAS.length}</div></div></div></div>`;
+tc.innerHTML += `<div class="tbl-card grand"><div class="tbl-card-top"><div class="tbl-name" style="font-size:16px;font-weight:800;color:#fff">Total Geral</div><div class="tbl-grand-total">${CONF_N}</div></div><div class="tbl-stats"><div class="tbl-stat"><div class="tbl-stat-label">Receita</div><div class="tbl-stat-val e" style="font-size:13px">R$ 456.390</div></div><div class="tbl-stat"><div class="tbl-stat-label">Dias</div><div class="tbl-stat-val g">${DIAS.length}</div></div></div></div>`;
 
 const tb = document.getElementById('tblBody');
 CUPONS.forEach((c,i) => {
   const o = ORIG[c]; if (!o) return;
   tb.innerHTML += `<div class="tbl-row"><div><span class="ori-badge"><span class="ori-swatch" style="background:${COLORS[i]}"></span>${c}</span></div><div><span class="dnum dnum-g">${o.c}</span></div><div><span class="dnum dnum-e">${o.r}</span></div><div><span class="dtc">${Math.round(o.c/CONF_N*100)}%</span></div></div>`;
 });
-tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${CONF_N}</span></div><div><span class="dnum dnum-e" style="font-size:16px">R$ 453.618</span></div><div></div></div>`;
+tb.innerHTML += `<div class="tbl-row grand-row"><div><span style="font-size:14px;font-weight:800;color:#fff">Total Geral</span></div><div><span class="dnum-big">${CONF_N}</span></div><div><span class="dnum dnum-e" style="font-size:16px">R$ 456.390</span></div><div></div></div>`;
 
 // PIN LOCK
 const PIN = '2026';
